@@ -29,10 +29,8 @@ public class PageService {
             transactions.add(transaction);
         }
 
-        long start = pageable.getOffset();
-        long end = (start + pageable.getPageSize()) > transactions.size() ? transactions.size() : (start + pageable.getPageSize());
-        return new PageImpl<>(transactions.subList((int) start, (int) end), pageable, transactions.size());
-
-
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), transactions.size());
+        return new PageImpl<>(transactions.subList(start, end), pageable, transactions.size());
     }
 }
